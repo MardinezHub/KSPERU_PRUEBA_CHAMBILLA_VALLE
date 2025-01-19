@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Crear Usuario{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="text-center mb-4">Crear Nuevo Usuario</h1>
+
+            <!-- Mostrar errores de validación -->
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+
+            <!-- Formulario -->
+            {{ form_start(form, { 'attr': { 'class': 'card p-4 shadow-sm' } }) }}
+                <div class="mb-3">
+                    {{ form_label(form.nombre, 'Nombre', { 'label_attr': { 'class': 'form-label' } }) }}
+                    {{ form_widget(form.nombre, { 'attr': { 'class': 'form-control', 'placeholder': 'Ingresa tu nombre' } }) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.apellidoPaterno, 'Apellido Paterno', { 'label_attr': { 'class': 'form-label' } }) }}
+                    {{ form_widget(form.apellidoPaterno, { 'attr': { 'class': 'form-control', 'placeholder': 'Ingresa tu apellido paterno' } }) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.apellidoMaterno, 'Apellido Materno', { 'label_attr': { 'class': 'form-label' } }) }}
+                    {{ form_widget(form.apellidoMaterno, { 'attr': { 'class': 'form-control', 'placeholder': 'Ingresa tu apellido materno' } }) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.dni, 'DNI', { 'label_attr': { 'class': 'form-label' } }) }}
+                    {{ form_widget(form.dni, { 'attr': { 'class': 'form-control', 'placeholder': 'Ingresa tu DNI (8 dígitos)', 'maxlength': 8, 'inputmode': 'numeric', 'pattern': '\\d{8}' } }) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.contrasenia, 'Contraseña', { 'label_attr': { 'class': 'form-label' } }) }}
+                    {{ form_widget(form.contrasenia, { 'attr': { 'class': 'form-control', 'placeholder': 'Crea una contraseña segura', 'type': 'password' } }) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.rol, 'Rol', { 'label_attr': { 'class': 'form-label' } }) }}
+                    {{ form_widget(form.rol, { 'attr': { 'class': 'form-select' } }) }}
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            {{ form_end(form) }}
+
+            <div class="text-center mt-4">
+                <a href="{{ path('app_usuario_index') }}" class="btn btn-secondary">Volver a la lista</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

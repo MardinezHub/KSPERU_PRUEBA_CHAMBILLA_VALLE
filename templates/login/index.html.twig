@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-8 col-sm-10">
+            <!-- Card Container -->
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white text-center">
+                    <h2 class="mb-0">Iniciar Sesión</h2>
+                </div>
+                <div class="card-body p-4">
+                    <!-- Flash messages -->
+                    {% for message in app.flashes('error') %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+
+                    <!-- Login Form -->
+                    <form method="post">
+                        <div class="mb-3">
+                            <label for="dni" class="form-label">DNI</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-person"></i>
+                                </span>
+                                <input type="text" id="dni" name="dni" class="form-control" 
+    placeholder="Ingrese su DNI" maxlength="8" inputmode="numeric" pattern="\d*" required
+    title="El DNI debe contener únicamente números">
+
+
+
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="contrasenia" class="form-label">Contraseña</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-lock"></i>
+                                </span>
+                                <input type="password" id="contrasenia" name="contrasenia" class="form-control" 
+                                    placeholder="Ingrese su contraseña" required>
+                            </div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                Ingresar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <p class="mb-0">¿Eres nuevo? <a href="{{ path('app_usuario_new') }}" class="text-primary fw-bold">Regístrate aquí</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

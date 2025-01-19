@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listado de Matrículas{% endblock %}
+
+{% block body %}
+    <h1>Listado de Matrículas</h1>
+
+    {# Mensajes Flash #}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Fecha de Inscripción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for matricula in matriculas %}
+            <tr>
+                <td>{{ matricula.id }}</td>
+                <td>{{ matricula.fechaInscripcion ? matricula.fechaInscripcion|date('d/m/Y H:i:s') : 'N/A' }}</td>
+                <td>
+                    <a href="{{ path('app_matricula_show', {'id': matricula.id}) }}" class="btn btn-primary btn-sm">Ver</a>
+                    <a href="{{ path('app_matricula_edit', {'id': matricula.id}) }}" class="btn btn-warning btn-sm">Editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3" class="text-center">No se encontraron matrículas registradas.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_matricula_new') }}" class="btn btn-success">Crear Nueva Matrícula</a>
+{% endblock %}

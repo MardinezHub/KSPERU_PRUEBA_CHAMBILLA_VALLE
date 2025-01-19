@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Matricula{% endblock %}
+
+{% block body %}
+    <h1>Edit Matricula</h1>
+
+    {{ include('matricula/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_matricula_index') }}">back to list</a>
+
+    {{ include('matricula/_delete_form.html.twig') }}
+{% endblock %}

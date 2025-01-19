@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listado de Usuarios{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <h1 class="text-center mb-4">Listado de Usuarios</h1>
+
+            <!-- Botón para crear nuevo usuario -->
+            <div class="text-end mb-3">
+                <a href="{{ path('app_usuario_new') }}" class="btn btn-success">
+                    <i class="bi bi-plus-circle"></i> Crear Nuevo Usuario
+                </a>
+            </div>
+
+            <!-- Tabla de usuarios -->
+            <table class="table table-bordered table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
+                        <th>DNI</th>
+                        <th>Rol</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for usuario in usuarios %}
+                    <tr>
+                        <td>{{ usuario.id }}</td>
+                        <td>{{ usuario.nombre }}</td>
+                        <td>{{ usuario.apellidoPaterno }}</td>
+                        <td>{{ usuario.apellidoMaterno }}</td>
+                        <td>{{ usuario.dni }}</td>
+                        <td>{{ usuario.rol.nombre }}</td>
+                        <td class="text-center">
+                            <a href="{{ path('app_usuario_show', {'id': usuario.id}) }}" class="btn btn-info btn-sm">
+                                <i class="bi bi-eye"></i> Ver
+                            </a>
+                            <a href="{{ path('app_usuario_edit', {'id': usuario.id}) }}" class="btn btn-warning btn-sm">
+                                <i class="bi bi-pencil"></i> Editar
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center">No se encontraron registros.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            
+        </div>
+    </div>
+</div>
+{% endblock %}
