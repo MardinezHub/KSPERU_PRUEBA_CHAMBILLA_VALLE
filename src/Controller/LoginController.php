@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Usuario;
+use App\Form\UsuarioType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +29,7 @@ final class LoginController extends AbstractController
                 // Guardar la ID del usuario en la sesión
                 $session->set('usuario_id', $usuario->getId());
                 $session->set('usuario_nombre', $usuario->getNombre());
+                $session->set('usuario_apellido', $usuario->getApellidoPaterno());
                 
                 // Validar el rol del usuario y redirigir
                 $rolId = $usuario->getRol()->getId();
@@ -48,6 +50,26 @@ final class LoginController extends AbstractController
         // Renderizar el formulario de login
         return $this->render('login/index.html.twig', [
             'controller_name' => 'LoginController',
+        ]);
+    }
+    
+    #[Route('/new', name: 'app_registro_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $usuario = new Usuario();
+        $form = $this->createForm(UsuarioType::class, $usuario);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($usuario);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('login/registro.html.twig', [
+            'usuario' => $usuario,
+            'form' => $form,
         ]);
     }
 

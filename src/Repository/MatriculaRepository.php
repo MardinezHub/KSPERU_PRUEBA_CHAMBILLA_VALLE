@@ -16,6 +16,33 @@ class MatriculaRepository extends ServiceEntityRepository
         parent::__construct($registry, Matricula::class);
     }
 
+    public function findAllWithCurso(): array
+    {
+        return $this->createQueryBuilder('m')
+            ->join('m.Curso', 'c') // Relación con la tabla Curso
+            ->addSelect('c')      // Incluye los datos de Curso
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByUsuario(int $usuarioId): array
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.Usuario = :usuario')
+            ->setParameter('usuario', $usuarioId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByCurso(int $cursoId): array
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.Curso = :curso')
+            ->setParameter('curso', $cursoId)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Matricula[] Returns an array of Matricula objects
     //     */

@@ -10,7 +10,9 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Lista de Cursos Matriculados</a>
+            <a class="navbar-brand" href="#">Lista de Estudiantes con Cursos Matriculados</a>
+            <a href="{{ path('app_usuario_index') }}" class="btn btn-warning">Usuarios</a>
+            <a href="{{ path('app_lista_index') }}" class="btn btn-warning">Cursos Matriculados de Usuarios</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -40,23 +42,26 @@
     {% endfor %}
 
     <table class="table table-striped">
-        <thead class="thead-dark">
-            <tr>
-                <th>ID</th>
-                <th>Curso</th>
-                <th>Fecha de Inscripción</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Usuario</th>
+            <th>Curso</th>
+            <th>Fecha de Inscripción</th>
+        </tr>
+    </thead>
+    <tbody>
         {% for matricula in matriculas %}
             <tr>
                 <td>{{ matricula.id }}</td>
-                <td>{{ matricula.Curso ? matricula.Curso.nombre : 'N/A' }}</td>
-                <td>{{ matricula.fechaInscripcion ? matricula.fechaInscripcion|date('d/m/Y H:i:s') : 'N/A' }}</td>
                 <td>
-                    <a href="{{ path('app_matricula_show', {'id': matricula.id}) }}" class="btn btn-primary btn-sm">Visualizar</a>
-                    <a href="{{ path('app_matricula_edit', {'id': matricula.id}) }}" class="btn btn-warning btn-sm">Editar</a>
+                    {{ matricula.Usuario ? matricula.Usuario.nombre ~ ' ' ~ matricula.Usuario.apellidoPaterno ~ ' ' ~ matricula.Usuario.apellidoMaterno : 'No asignado' }}
+                </td>
+                <td>
+                    {{ matricula.Curso ? matricula.Curso.nombre : 'No asignado' }}
+                </td>
+                <td>
+                    {{ matricula.fechaInscripcion ? matricula.fechaInscripcion|date('d/m/Y H:i:s') : 'N/A' }}
                 </td>
             </tr>
         {% else %}
@@ -64,10 +69,8 @@
                 <td colspan="4" class="text-center">No se encontraron matrículas registradas.</td>
             </tr>
         {% endfor %}
-        </tbody>
-    </table>
+    </tbody>
+</table>
 
-    <center>
-    <a href="{{ path('app_matricula_new') }}" class="btn btn-success">Crear Nueva Matrícula</a>
-    </center>
 {% endblock %}
+

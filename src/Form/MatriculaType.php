@@ -17,7 +17,7 @@ class MatriculaType extends AbstractType
             
             ->add('Curso', EntityType::class, [
                 'class' => Curso::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nombre',
             ])
         ;
     }

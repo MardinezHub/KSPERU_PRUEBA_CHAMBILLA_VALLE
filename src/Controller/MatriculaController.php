@@ -17,12 +17,35 @@ use Symfony\Component\Routing\Annotation\Route;
 final class MatriculaController extends AbstractController
 {
     #[Route(name: 'app_matricula_index', methods: ['GET'])]
-    public function index(MatriculaRepository $matriculaRepository): Response
+    public function index(MatriculaRepository $matriculaRepository, Request $request, SessionInterface $session): Response
     {
+        // Obtener el usuario logueado desde la sesión
+        $usuarioId = $session->get('usuario_id');
+
+        if (!$usuarioId) {
+            $this->addFlash('error', 'Debes iniciar sesión para ver tus matrículas.');
+            return $this->redirectToRoute('app_login');
+        }
+
+        // Filtrar las matrículas por usuario logueado
+        $matriculas = $matriculaRepository->findBy(['Usuario' => $usuarioId]);
+
         return $this->render('matricula/index.html.twig', [
-            'matriculas' => $matriculaRepository->findAll(),
+            'matriculas' => $matriculas,
         ]);
     }
+
+    #[Route('/listamatricula', name: 'app_lista_index', methods: ['GET'])]
+    public function lista(MatriculaRepository $matriculaRepository): Response
+    {
+        $matriculas = $matriculaRepository->findAllWithCurso();
+
+        return $this->render('matricula/lista.html.twig', [
+            'matriculas' => $matriculas,
+        ]);
+    }
+
+
 
     #[Route('/new', name: 'app_matricula_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response

@@ -3,7 +3,30 @@
 {% block title %}Curso index{% endblock %}
 
 {% block body %}
-    <h1>Curso index</h1>
+    {% set usuario_nombre = app.session.get('usuario_nombre') %}
+    {% set usuario_apellido = app.session.get('usuario_apellido') %}
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Listado de Cursos Creados</a>
+            <a href="{{ path('app_usuario_index') }}" class="btn btn-warning">Usuarios</a>
+            <a href="{{ path('app_lista_index') }}" class="btn btn-warning">Cursos Matriculados de Usuarios</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <span class="nav-link">Bienvenido, <strong>{{ usuario_nombre }}</strong> <strong>{{ usuario_apellido }}</strong></span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="{{ path('app_logout') }}">Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <table class="table">
         <thead>
@@ -21,8 +44,8 @@
                 <td>{{ curso.nombre }}</td>
                 <td>{{ curso.creditos }}</td>
                 <td>
-                    <a href="{{ path('app_curso_show', {'id': curso.id}) }}">show</a>
-                    <a href="{{ path('app_curso_edit', {'id': curso.id}) }}">edit</a>
+                    <a href="{{ path('app_curso_show', {'id': curso.id}) }}" class="btn btn-primary">Visualizar</a>
+                    <a href="{{ path('app_curso_edit', {'id': curso.id}) }}" class="btn btn-secondary">Editar</a>
                 </td>
             </tr>
         {% else %}
@@ -32,6 +55,7 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_curso_new') }}">Create new</a>
+    <center>
+    <a href="{{ path('app_curso_new') }}" class="btn btn-success">Crear nuevo Curso</a>
+    </center>
 {% endblock %}

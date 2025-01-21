@@ -3,7 +3,29 @@
 {% block title %}Curso{% endblock %}
 
 {% block body %}
-    <h1>Curso</h1>
+
+    {% set usuario_nombre = app.session.get('usuario_nombre') %}
+    {% set usuario_apellido = app.session.get('usuario_apellido') %}
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Visualización del Curso</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <span class="nav-link">Bienvenido, <strong>{{ usuario_nombre }}</strong> <strong>{{ usuario_apellido }}</strong></span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="{{ path('app_logout') }}">Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <table class="table">
         <tbody>
@@ -22,9 +44,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_curso_index') }}">back to list</a>
+    <a href="{{ path('app_curso_index') }}" class="btn btn-primary">Regresar a la Lista</a>
 
-    <a href="{{ path('app_curso_edit', {'id': curso.id}) }}">edit</a>
-
-    {{ include('curso/_delete_form.html.twig') }}
+    <btn class="btn btn-danger">{{ include('curso/_delete_form.html.twig') }}</btn>
 {% endblock %}

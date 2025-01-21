@@ -4,18 +4,19 @@
 
 {% block body %}
     {% set usuario_nombre = app.session.get('usuario_nombre') %}
+    {% set usuario_apellido = app.session.get('usuario_apellido') %}
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Gestión de Cursos</a>
+            <a class="navbar-brand" href="#">Crear Nuevo Curso</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <span class="nav-link">Bienvenido, <strong>{{ usuario_nombre }}</strong></span>
+                        <span class="nav-link">Bienvenido, <strong>{{ usuario_nombre }}</strong> <strong>{{ usuario_apellido }}</strong></span>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-danger" href="{{ path('app_logout') }}">Cerrar Sesión</a>
@@ -27,7 +28,6 @@
 
     <!-- Contenido principal -->
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Crear Nuevo Curso</h1>
 
         <!-- Formulario -->
         <div class="card p-4 shadow-sm">
